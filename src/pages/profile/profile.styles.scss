@@ -1,0 +1,45 @@
+
+.profile {
+    text-align: center;
+    padding-top: 70px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 380px;
+    //background-color: white;
+    
+    .title {
+      margin: 10px 0;
+    }
+}
+
+.edit-display-name{
+    text-align: left;
+    font-size: 18px;
+    padding: 30px 10px 0px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    margin: 10px 0;
+    
+}
+.dis-char{
+    font-weight: bold; 
+}
+.edit-email{
+    text-align: left;
+    font-size: 18px;
+    padding: 0px 10px 30px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    margin: 30px 0;
+}
+.email-char{
+    font-weight: bold; 
+}
+.edit-form{
+    padding: 15px 0 40px 0;
+}

@@ -1,0 +1,19 @@
+.sign-up {
+    padding-top: 70px;
+    
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 380px;
+    text-align: center;
+    .title {
+      margin: 10px 0 20px 0;
+    }
+    .sign-up-button{
+      margin: 40px auto;
+      display: flex;
+      flex-direction: column;
+      width: 150px;
+      text-align: center;
+    }
+}
