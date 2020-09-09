@@ -1,6 +1,6 @@
 ## A Personal Project with React
 
-### "Top 10 lists"  
+### "Making your own Top 10 lists"  
 
 This application was built using create-react-app as a base, and the technologies used were React (Custom Hooks, Context), Firebase & Material UI.
 
@@ -9,12 +9,12 @@ This application was built using create-react-app as a base, and the technologie
 
 ![Application Demo](demo/demo.gif)
 
-Url Link : [https://project-9fe3c.web.app](https://project-9fe3c.web.app)
+Url Link : [https://project-9fe3c.web.app](https://project-9fe3c.web.app/signin)
 
 
 ## About application
-It is kind of TO-DO list app. 
-You can search contents by title. For finding books and movies, you have to type Japanese but other genres accept English seaerch words. Following is the list of API that I use for searching data:
+It is kind of TO-DO list app. In TO-DO app, you create project and add task in it. In this app, you create list and add pictures of books,movies,songs and games.
+You can search contents by title. For finding books and mamga, you have to type Japanese but other genres accept English seaerch words. Following is the list of API that I use for searching data:
 
 Moive Search API (Movie, Anime and TV Series): [The Movie Database (TMDb)](https://developers.themoviedb.org/3/search/search-movies)
 
