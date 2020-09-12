@@ -21,23 +21,17 @@ const useStyles = makeStyles((theme) => ({
           color:"#00bfff"
       }
     },
-
     itemPicture:{
         overflow:"hidden",    
     },
     notSelected:{
         '&:hover':{
-            
            border:"2px solid #4169e1",
            transform:"scale(1.2)",
            opacity:'0.9',
-           transition:'transfomr 6s cubic-bezier(0.25,0.45,0.45,0.95)'
-           
+           transition:'transfomr 6s cubic-bezier(0.25,0.45,0.45,0.95)'  
         }
-        
- 
     }
-   
 }));
 
 const imgStyle = {
@@ -92,9 +86,8 @@ export const SelectedImage = ({
                 }
             />
         </Tooltip>)}
-        
     </div>
-    );
+  );
 
 const classes = useStyles();
 
@@ -114,13 +107,11 @@ const classes = useStyles();
     setIsSelected(!isSelected);
   };
   
- 
   useEffect(() => {
     setIsSelected(selected);
   }, [selected]);
 
   return (
-    
     <div
       style={{ margin, height: photo.height, width: photo.width, ...cont }}
       className={!isSelected ? "not-selected" : ""}
@@ -138,7 +129,6 @@ const classes = useStyles();
       
       <style>{`.not-selected:hover{outline:2px solid royalblue}`}</style>
     </div>
-    
   );
 };
 

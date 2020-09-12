@@ -1,5 +1,6 @@
 import React,{useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
+
 import CurrentUserContext from '../../contexts/current-user/current-user.context';
 import {sortedList} from '../../helpers/helpers';
 import { useListsValue } from '../../contexts/lists/index';
@@ -50,12 +51,8 @@ const useStyles = makeStyles((theme) => ({
     ].join(','),
   },
   divider:{
-    
     margin:theme.spacing(0,8,0,1),
     backgroundColor:"#ff7a7a",
-  },
-  drawer: {
-    
   },
   appBar: {
     backgroundColor:"#ffffff",
@@ -76,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   menuButtonWeb: {
-    
     marginRight: theme.spacing(2),
     [theme.breakpoints.down('xs')]: {
       display: 'none',
@@ -96,7 +92,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    
   },
   contentShift: {
     [theme.breakpoints.up('sm')]:{transition: theme.transitions.create('margin', {
@@ -131,7 +126,6 @@ function ResponsiveDrawer(props) {
   const currentUser = useContext(CurrentUserContext);
   const displayName = currentUser ? currentUser.displayName : '';
   
-
   const [mobileOpen, setMobileOpen] = useState(false);
   const [open, setOpen] = useState(false);
   
@@ -187,7 +181,7 @@ function ResponsiveDrawer(props) {
 
   return (
     <div className={classes.root}>
-      {/* <CssBaseline /> */}
+      
       <AppBar elevation={0} position="fixed" 
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -279,14 +273,11 @@ function ResponsiveDrawer(props) {
           [classes.contentShift]: open,
         })}
       >
-        
-        
-        
+            
       </main>
     </div>
   );
 }
-
 
 
 export default ResponsiveDrawer;

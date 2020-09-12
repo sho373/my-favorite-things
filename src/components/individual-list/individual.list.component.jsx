@@ -93,7 +93,7 @@ export const IndividualList = ({list}) => {
   //   onLongPress: (ev) =>  {setOpen({isEditing:!isEditing});
   //   console.log('on long press', ev.button, ev.shiftKey)}
   // });
-
+  
   return (
     
     <div >  
@@ -126,6 +126,7 @@ export const IndividualList = ({list}) => {
 
             <Tooltip  title="Delete">
             <IconButton 
+              data-testid="delete-list"
               onClick={() => 
                 setOpen({showConfirm:!showConfirm})}
               style={{color:"#dcdcdc"}} edge="end" aria-label="delete">

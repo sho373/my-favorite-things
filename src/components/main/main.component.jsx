@@ -1,25 +1,23 @@
 import React, { useEffect ,useState,useCallback} from 'react';
-import { getTitle} from '../../helpers/helpers';
-import { useSelectedListValue, useListsValue } from '../../contexts/lists/index';
 import Gallery from "react-photo-gallery";
-import {firestore} from '../../firebase/firebase.utils';
-import SelectedImage from './selectedImage.component';
-import { makeStyles } from '@material-ui/core/styles';
-
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import {firestore} from '../../firebase/firebase.utils';
+import SelectedImage from './selectedImage.component';
+import { getTitle} from '../../helpers/helpers';
+import { useSelectedListValue, useListsValue } from '../../contexts/lists/index';
+
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection:'column',
-    //width:640,
     margin:theme.spacing(0.5,'auto'),
     padding:theme.spacing(0,1),
     [theme.breakpoints.up('sm')]: {
-     // width:350,
-     width:600,
+      width:600,
     },
     
   },
@@ -33,9 +31,7 @@ const useStyles = makeStyles((theme) => ({
   listName:{
     margin:theme.spacing(7,'auto',2,'auto'),
     color:"#1c1c1c",
-   
   },
- 
 }));
 
 export const Main = () => {
@@ -67,11 +63,8 @@ export const Main = () => {
     document.title = `${listName}`;
   });
   
- 
- 
   useEffect(() => {
    
-      //console.log("useeffect work")
       return(
        firestore.collection('items')
        .where("userid","==",user.uid)
@@ -93,7 +86,6 @@ export const Main = () => {
        });
        setWorksImg(worksArray); 
         })
-       
       )
   
   }, [selectedList])
@@ -119,7 +111,7 @@ export const Main = () => {
     return (
       <div className={classes.root}> 
         <div>
-        <h2 className = {classes.listName}>{listName}</h2>
+          <h2 className = {classes.listName}>{listName}</h2>
         </div>
        
         {worksImg.length > 0 && (
@@ -131,7 +123,6 @@ export const Main = () => {
 
       </div>
     )
-  
 };
 
 export default Main

@@ -6,8 +6,6 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 export const useItems = (selectedList,selectedGenreName) => {
-   
-    
     
     const [items, setItems] = useState([]);
     
@@ -25,10 +23,8 @@ export const useItems = (selectedList,selectedGenreName) => {
           height:(selectedGenreName === 'music') ? 4 : 6,
           itemurl:item.data().itemUrl,
           src:item.data().src,
-          
         }));
        
-        
         if (JSON.stringify(allLists) !== JSON.stringify(items)) {
           setItems(allLists);
         }

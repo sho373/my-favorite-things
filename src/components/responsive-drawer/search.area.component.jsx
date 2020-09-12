@@ -14,7 +14,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     search: {
         border: 2,
         position: 'relative',
-        //borderRadius: theme.shape.borderRadius,
         borerColer:"#000000",
         variant:'outlined',
         backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -37,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
         },  
       },
       searchIcon: {
-        //backgroundColor:"#f6f6f6",
         padding: theme.spacing(0,0,0,1),
         border: 2,
         height: '100%',
@@ -139,20 +136,18 @@ export const SearchArea = () => {
     }
 
     const handleChange = (event) => {
-        
         document.getElementById("myForm").reset();
         setWorks("")
         setGenreName(event.target.value); 
     };
+
     const handleSearch = (event) => {
         setMyValue(event.target.value); 
     }
 
-    
-
     const searchRakuten = (event) => {
         event.preventDefault();
-        //console.log("MYBAL",myValue)
+       
         let sortString = "";
         if(genreName === "manga"){
             sortString = "&booksGenreId=001001"
@@ -166,28 +161,23 @@ export const SearchArea = () => {
                         +  sortString
                         + "&title=" + encodeURIComponent(myValue);
         
-        
         axios
             .get(proxy + requestUrl)
             .then((data) => {
-               
                 //console.log("USING BOOK API ")
                 setWorks([...data.data.Items])
                
                 if(data.data.Items.length === 0){
                     setOpen(true);
-                  
                     console.log("CANT FIND")
                 }
-                
-                
+            
             })
             .catch(error =>{
                 setOpen(true);
                 console.log("CANT FIND")
                 return;
-            })
-           
+            })    
     }
 
     const searchMovie = (event) => {
@@ -204,20 +194,18 @@ export const SearchArea = () => {
         axios
             .get(proxy + requestUrl)
             .then((data) => {
-               
                 //console.log("USING MOVIE API ")
                 setWorks([...data.data.results])
                 if(data.data.results.length === 0){
                   setOpen(true);
                   console.log("CANT FIND")
               }
-                
+            
             })
             .catch(error =>{
                  setOpen(true);
                 console.log("CANT FIND")
-            })
-           
+            })         
     }
 
     const searchMusic = (event) => {
@@ -227,14 +215,13 @@ export const SearchArea = () => {
         axios
             .get(proxy + url)
             .then((data) => {
-              
                 //console.log("USING MUSIC API ")
                 setWorks([...data.data.results])
                 if(data.data.results.length === 0){
                   setOpen(true);
                   console.log("CANT FIND")
                 }
-                
+             
             })
             .catch(error =>{
               setOpen(true);
@@ -242,6 +229,7 @@ export const SearchArea = () => {
             })
            
     }
+
     const searchGame = (event) => {
         event.preventDefault();
         
@@ -250,7 +238,6 @@ export const SearchArea = () => {
 
         axios.get(`${proxy}https://api-v3.igdb.com/games?search=${myValue}&region=5&fields=name,first_release_date,cover.url,url&limit=15`)
         .then((data) => {
-           
             //console.log("GAME API ")
             setWorks([...data.data])
             if(data.data.length === 0){
@@ -262,11 +249,9 @@ export const SearchArea = () => {
         .catch(error =>{
             setOpen(true);
             console.log("CANT FIND")
-        })
-      
+        }) 
     }
  
-    
     return (
         <div className={classes.root}>
             <NativeSelect
@@ -287,10 +272,8 @@ export const SearchArea = () => {
             </NativeSelect>
               
               <div className={classes.search}>
-                <div className={classes.searchIcon}>
+                <div className={classes.searchIcon}/>
                 
-                
-                </div>
                 <form  id="myForm" onSubmit = {
                     (genreName === "book" ||
                     genreName === "manga") 
@@ -304,34 +287,32 @@ export const SearchArea = () => {
                     : (genreName === "game")
                     ? searchGame
                     : searchGame
-                    
                     //goToSearch
                 }
                 >
                 <Paper className={classes.paper}>
                
-                <InputBase
-                  
-                  placeholder={genreName === 'game' ? 
-                  "Search by title in English…"
-                  :"Search by title…"}
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  onChange={handleSearch}
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-                 <IconButton 
-                    className={classes.searchButton} type="submit" 
-                  
-                  //onClick={() => handleLoadingOpen}
-                  aria-label="search">
-                    <SearchIcon fontSize="small"/>
-                  </IconButton>
+                  <InputBase
+                    placeholder={genreName === 'game' ? 
+                    "Search by title in English…"
+                    :"Search by title…"}
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    onChange={handleSearch}
+                    inputProps={{ 'aria-label': 'search' }}
+                  />
+                  <IconButton 
+                      className={classes.searchButton} type="submit" 
+                      aria-label="search">
+                      <SearchIcon fontSize="small"/>
+                    </IconButton>
+
                 </Paper>
                 </form>
               </div>
+
               {open && 
                 (<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">NO RESULTS</DialogTitle>
@@ -346,22 +327,11 @@ export const SearchArea = () => {
               } 
               
                   {(works.length > 0) && 
-                    
-                  <Redirect to={{
-                        pathname: "/search",
-                        state: { results: works,genreId:genreName},
-                        
-                    }}/>
-                  
-                    }
-
-                  {/* <ClipLoader
-                  css={override}
-                  size={55}
-                  color={"#36D7B7"}
-                  loading={loading}
-                /> */}
-                   
+                    <Redirect to={{
+                          pathname: "/search",
+                          state: { results: works,genreId:genreName},
+                      }}/>
+                  }
         </div>
     )
 }

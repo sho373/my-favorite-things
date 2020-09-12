@@ -15,6 +15,7 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
+
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         justifyContent:'space-between',
         margin: theme.spacing(0,0,0,'auto'),
-        
         [theme.breakpoints.down('sm')]: {
           display:'none'
         },
@@ -70,7 +70,6 @@ export const RenderMobileMenu = ({displayName}) => {
             <div className={classes.otherButton}>   
                 <Tooltip title="List">
                     <IconButton 
-                        
                         onClick = {() => history.push(`/users/${displayName}`)}>
                         <ListAltIcon/>
                     </IconButton>
@@ -86,7 +85,6 @@ export const RenderMobileMenu = ({displayName}) => {
                 
                 <Tooltip title="Sign out">
                     <IconButton 
-                        
                         onClick={(event) => {setShowConfirm(true)}}>
                         <ExitToAppIcon/>
                     </IconButton>
@@ -94,12 +92,12 @@ export const RenderMobileMenu = ({displayName}) => {
             </div>
             
             <IconButton
-            className={classes.sectionMobile}
-            aria-label="show more"
-            aria-controls={mobileMenuId}
-            aria-haspopup="true"
-            onClick={handleMobileMenuOpen}>
-            <MoreIcon />
+                className={classes.sectionMobile}
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}>
+                <MoreIcon />
             </IconButton>
             
             <Menu
@@ -114,7 +112,6 @@ export const RenderMobileMenu = ({displayName}) => {
                 <MenuItem
                     className={classes.mobileMenu}
                     onClick = {() => history.push(`/users/${displayName}`)}>
-                    
                         <ListAltIcon className={classes.mobileMenuIcon}/>   
                     
                     <p>List</p>
@@ -122,7 +119,6 @@ export const RenderMobileMenu = ({displayName}) => {
                 <MenuItem
                     className={classes.mobileMenu}
                     onClick = {() => history.push('/profile')}>
-                      
                             <AccountCircleIcon className={classes.mobileMenuIcon}/>
                         
                     <p>Profile</p>
@@ -130,8 +126,8 @@ export const RenderMobileMenu = ({displayName}) => {
                 
                 <MenuItem 
                     className={classes.mobileMenu}
-                    onClick={(event) => {setShowConfirm(true)}}>
-                    
+                    onClick={(event) => {setShowConfirm(true);
+                        history.push('/signin')}}>
                     <ExitToAppIcon className={classes.mobileMenuIcon}/>
                    
                     <p>Sign out</p>
@@ -141,7 +137,6 @@ export const RenderMobileMenu = ({displayName}) => {
                 <Dialog open={showConfirm} onClose={displayClose} aria-labelledby="form-dialog-title">
                     <DialogTitle>You want to sign out?</DialogTitle>
 
-                    
                     <DialogActions>
                     <Button variant="outlined" color="default" 
                         onClick={()=> displayClose()} >

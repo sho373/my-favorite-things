@@ -1,10 +1,11 @@
 import React ,{useState,useContext} from 'react';
-
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import {firestore } from '../../firebase/firebase.utils';
+
 import CurrentUserContext from '../../contexts/current-user/current-user.context';
+
 import './profile.styles.scss';
 
 //MUI
@@ -29,7 +30,6 @@ function Alert(props) {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-       
       '& > * + *': {
         marginTop: theme.spacing(1),
         padding: '0 30px',
@@ -40,10 +40,6 @@ const useStyles = makeStyles((theme) => ({
     button: { 
        cursor:'pointer',
         float: 'right',
-        
-        '&:hover': {
-            
-          }
       }
   }));
 
@@ -80,14 +76,11 @@ const Profile = () => {
 
     const  currentUser = useContext(CurrentUserContext);
     
-    
     const editUser = firebase.auth().currentUser;
     const userId =  editUser ? editUser.uid : "";
    
-
     const handleChange = event => {
         const { value, name } = event.target;
-    
         setValue({ ...myValue, [name]: value });
     };
     
@@ -112,7 +105,6 @@ const Profile = () => {
     }
     
     const updateDisplay = async event => {
-        console.log("DDD",displayName)
         
         if((displayName !== currentUser.displayName) && displayName){
 
@@ -142,13 +134,8 @@ const Profile = () => {
                 setOpen({isError: true,
                     errorMes:{display: error.message}
                     })
-            }
-            
-        }
-       
-        
-        //setValue({displayName:""})
-        
+            }   
+        }       
     }
 
     const updateEmail = async event => {
@@ -192,18 +179,15 @@ const Profile = () => {
                       
                     setOpen({isError: true,
                         errorMes:{email: error.message}
-                      })
+                    })
+
                   })
             }catch(error){
-                
                 setOpen({isError: true,
                      errorMes:{email: error.message}
-                   })
+                })
             }
-        
         }
-        
-        
     }
 
     const updatePassword = async event => {
@@ -237,7 +221,7 @@ const Profile = () => {
         }catch (error){
             setOpen({isError: true,
                 errorMes:{password: error.message}
-                })
+            })
         }   
     }
     const deleteWholeList = async (userId) => {
@@ -263,9 +247,7 @@ const Profile = () => {
                 doc.ref.delete();
             });
         }) 
-
-         
-      };
+    };
 
     const deleteAcocunt = async event => {
 
@@ -284,17 +266,11 @@ const Profile = () => {
                     .doc(userId)
                     .delete()
                     .then(
-                        
-                           //
                     )
                  )
-                
-
+            
                  editUser.delete().then(function(){  
-                    // setOpen({isSucces:true,
-                    //     succesMes:"Account was successfully deleted!"})
-                    
-                        alert("Account was successfully deleted!")
+                    alert("Account was successfully deleted!")
                     //redirectToTarget()
                   }).catch(function(error) {
                     // An error happened.
@@ -303,7 +279,6 @@ const Profile = () => {
                 
             })
             .catch(function(error){
-                
               setOpen({isError: true,
                   errorMes:{delete: error.message}
                 })
@@ -312,12 +287,12 @@ const Profile = () => {
         }catch (error){
             setOpen({isError: true,
                 errorMes:{delete: error.message}
-                })
+            })
         }   
     }
 
   return(
-    <div className = 'profile'> 
+    <div data-testid="profile" className = 'profile'> 
 
         <h2 className = 'title'>Edit your profile</h2>
         <h4>Here you can edit your profile</h4>
@@ -424,7 +399,6 @@ const Profile = () => {
         : null}
         
         
-       
         <Button className={classes.root} 
          onClick={()=> setOpen({passwordOpen:!passwordOpen})}
             variant="contained" color="primary">

@@ -9,7 +9,6 @@ import 'firebase/auth';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-
 import './sign-up.styles.scss';
 
 class SignUp extends React.Component  {
@@ -22,7 +21,7 @@ class SignUp extends React.Component  {
           email: '',
           password: '',
           confirmPassword: '',
-        errorMes:{}
+          errorMes:{}
         };
       }
 
@@ -34,8 +33,6 @@ class SignUp extends React.Component  {
         };
     }
   
-
- 
     handleSubmit = async event => {
         event.preventDefault();
 
@@ -52,22 +49,18 @@ class SignUp extends React.Component  {
             return;
         }
        
-
         const snapshot = await firebase.firestore().collection('users')
                         .where("displayName","==",displayName).get();
 
         if(!snapshot.empty){
             alert("this display name is already taken");
-            this.setState({
-                
+            this.setState({ 
                 errorMes:{displayName:"this display name is already taken"}
             })
             return;
         } 
            
-        
         try{
-            
             const {user} = await auth.createUserWithEmailAndPassword(
                 email,
                 password
@@ -80,7 +73,6 @@ class SignUp extends React.Component  {
                 email: '',
                 password: '',
                 confirmPassword: '',
-                
                 errorMes:{}
               });
 
@@ -88,26 +80,24 @@ class SignUp extends React.Component  {
             console.error(error);
             if(error.code === 'auth/email-already-in-use'){
                 alert("The email address is already in use by another account")
-                this.setState({
-                    
+                this.setState({ 
                     errorMes:{email:"The email address is already in use by another account"}
                 })
             }else if (error.code === 'auth/weak-password'){
                 alert("Passwords should be at least 6 characters")
                 this.setState({
-                    
                     errorMes:{password:"Passwords should be at least 6 characters"}
                 })
             }
         }
     }
-     handleChange = event => {
-        const {name,value} = event.target;
 
+    handleChange = event => {
+        const {name,value} = event.target;
         this.setState({ [name]: value });
     }
    
-     render () {
+    render () {
         const { displayName, email, 
             password, confirmPassword,
         errorMes } = this.state;
@@ -149,7 +139,6 @@ class SignUp extends React.Component  {
                         <TextField
                             error={!!errorMes.password}
                             helperText={errorMes.password}
-                           
                             margin="normal"
                             id="password"
                             type="password"
@@ -163,7 +152,6 @@ class SignUp extends React.Component  {
                         <TextField
                             error={!!errorMes.password}
                             helperText={errorMes.password}
-                            
                             margin="normal"
                             id="confirmPassword"
                             type="password"

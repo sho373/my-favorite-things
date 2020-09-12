@@ -38,13 +38,11 @@ const SignIn = () => {
           errorMes:{password: "Wrong password"}
           })
       }
-    }
-    
+    } 
   };
 
   const handleChange = event => {
     const { value, name } = event.target;
-
     setUserCredentials({ ...userCredentials, [name]: value });
   };
 
@@ -52,13 +50,10 @@ const SignIn = () => {
     setUserCredentials({email:'testuser@gmail.com',password:REACT_APP_TEST_USER_PASS});
   }
 
-  
-
     return (
       <div className='sign-in'>
         <h2>Sign in </h2>
         
-
         <form onSubmit={handleSubmit}>
           <TextField
             autoFocus

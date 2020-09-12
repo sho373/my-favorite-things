@@ -1,16 +1,14 @@
 .sign-in {
-    //margin: auto;
-    
     padding-top: 70px;
     margin: auto;
     width: 380px;
     display: flex;
     flex-direction: column;
     text-align: center;
+    
     .title {
       margin: 10px 0;
     }
-  
     .buttons {
       display: flex;
       flex-wrap: wrap;
@@ -19,13 +17,11 @@
     }
     .test-user-buttons{
       padding-top: 20px;
-      
       padding-right: 5px;
       flex-wrap: wrap;
       margin-left: 5px;
       justify-content: space-around;
     }
-
     .sign-up-here{
       text-align:center;
     }
