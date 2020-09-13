@@ -120,21 +120,53 @@ const Profile = () => {
             } 
 
             try{
-                await firestore.collection('users')
-                .doc(userId)
-                .update({
-                    createdAt:new Date(),
-                    displayName:displayName
-                })
-                .then(
-                    setOpen({isSucces:true,
-                        succesMes:"successfully updated!"})
-                )
+                const credentials = firebase.auth.EmailAuthProvider.credential(
+                    editUser.email,
+                    password
+                  )
+
+                  editUser.reauthenticateWithCredential(credentials)
+                  .then(function(){
+                      
+                    firestore.collection('users')
+                    .doc(userId)
+                    .update({
+                        createdAt:new Date(),
+                        displayName:displayName
+                    })
+                    .then(
+                        setOpen({isSucces:true,
+                            succesMes:"successfully updated!"})
+                    )
+                      
+                  }).catch(function(error){
+                      
+                    setOpen({isError: true,
+                        errorMes:{displayname: error.message}
+                    })
+
+                  })
             }catch(error){
                 setOpen({isError: true,
-                    errorMes:{display: error.message}
-                    })
-            }   
+                     errorMes:{displayname: error.message}
+                })
+            }
+            // try{
+            //     await firestore.collection('users')
+            //     .doc(userId)
+            //     .update({
+            //         createdAt:new Date(),
+            //         displayName:displayName
+            //     })
+            //     .then(
+            //         setOpen({isSucces:true,
+            //             succesMes:"successfully updated!"})
+            //     )
+            // }catch(error){
+            //     setOpen({isError: true,
+            //         errorMes:{display: error.message}
+            //         })
+            // }   
         }       
     }
 
@@ -162,18 +194,26 @@ const Profile = () => {
                   editUser.reauthenticateWithCredential(credentials)
                   .then(function(){
       
-                      editUser.updateEmail(email); 
+                    editUser.updateEmail(email).then(function() {
+                        // Update successful.
+                        firestore.collection('users')
+                        .doc(userId)
+                        .update({
+                             createdAt:new Date(),
+                             email:email
+                        })
+                        .then(
+                          setOpen({isSucces:true,
+                              succesMes:"successfully updated!"})
+                        )
+                      }).catch(function(error) {
+                        // An error happened.
+                        setOpen({isError: true,
+                            errorMes:{email: error.message}
+                        })
+                      });
                       
-                      firestore.collection('users')
-                      .doc(userId)
-                      .update({
-                           createdAt:new Date(),
-                           email:email
-                      })
-                      .then(
-                        setOpen({isSucces:true,
-                            succesMes:"successfully updated!"})
-                      )
+                     
                       
                   }).catch(function(error){
                       
@@ -190,7 +230,7 @@ const Profile = () => {
         }
     }
 
-    const updatePassword = async event => {
+    const setNewPassword = async event => {
 
         if(newPassword !== confirmPassword){
             setOpen({isError: true,
@@ -207,9 +247,16 @@ const Profile = () => {
             editUser.reauthenticateWithCredential(credentials)
             .then(function(){
 
-                editUser.updatePassword(newPassword)
-                setOpen({isSucces:true,
-                    succesMes:"Password was successfully updated!"})
+                editUser.updatePassword(newPassword).then(function() {
+                    setOpen({isSucces:true,
+                        succesMes:"Password was successfully updated!"})
+                  }).catch(function(error) {
+                    setOpen({isError: true,
+                        errorMes:{password: error.message}
+                    })
+                    return 
+                  });
+               
             })
             .catch(function(error){
                 
@@ -218,12 +265,15 @@ const Profile = () => {
                 })
             })
             
-        }catch (error){
+        }catch(error){
             setOpen({isError: true,
                 errorMes:{password: error.message}
             })
-        }   
+        } 
+        
+       
     }
+
     const deleteWholeList = async (userId) => {
 
         let delete_content = 
@@ -319,6 +369,17 @@ const Profile = () => {
                         onChange = {handleChange}
                         fullWidth
                         required
+                    />
+                     <TextField
+                        margin="normal"
+                        id="password"
+                        type="password"
+                        label = "Password"
+                        required
+                        name="password"
+                        onChange = {handleChange}
+                        fullWidth
+                        
                     />
                     </DialogContent>
                     <DialogActions>
@@ -449,7 +510,7 @@ const Profile = () => {
                         Cancel
                     </Button>
                     <Button variant="contained" color="primary" 
-                        onClick={() => updatePassword()}>
+                        onClick={() => setNewPassword()}>
                         Save
                     </Button>
                     </DialogActions>

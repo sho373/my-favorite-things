@@ -15,6 +15,7 @@ export const useItems = (selectedList,selectedGenreName) => {
       firestore
       .collection('items')
       .where('listId', '==', selectedList)
+      .orderBy("title")
       .get()
       .then(snapshot => {
         
