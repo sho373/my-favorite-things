@@ -136,7 +136,8 @@ export const ResultsCardBook = (props) => {
     const handleChange = (event) => {
         //let title = getTitle(lists,event.target.value).name
         setPickedList();
-        
+        console.log("pickedlist",pickedList)
+        console.log("pickedlistID",pickedListId)
         //console.log(getTitle(lists,event.target.value).name)
         setPickedListId(event.target.value)
     };
@@ -166,7 +167,7 @@ export const ResultsCardBook = (props) => {
           .where("listId","==",pickedListId)
           .get()
           .then(res =>{
-            let size = (res.size) ;
+            const size = (res.size) ;
             
             return size;
           }) 
@@ -251,7 +252,7 @@ export const ResultsCardBook = (props) => {
                             onChange={handleChange}
                             input={<Input id="demo-dialog-native" />}
                         >
-                            <option aria-label="None" value="" />
+                            <option aria-label="Select list" value='' />
                             {sortedLists.map((item,index) => {
                                 return <option key={item.listId}  value={item.listId}>
                                 {item.name}</option>

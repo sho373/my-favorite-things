@@ -88,6 +88,11 @@ class SignUp extends React.Component  {
                 this.setState({
                     errorMes:{password:"Passwords should be at least 6 characters"}
                 })
+            }else if(error.code === "auth/invalid-email"){
+                alert("The email address is badly formatted.")
+                this.setState({
+                    errorMes:{email:"The email address is badly formatted."}
+                })
             }
         }
     }

@@ -27,7 +27,7 @@ const SignIn = () => {
       setUserCredentials({email:'',password:''});
  
     }catch (error){
-      console.log(error)
+      //console.log(error)
       if(error.code === 'auth/user-not-found'){
         //alert('There is no user record corresponding to this identifier.')
         setOpen({
@@ -36,6 +36,10 @@ const SignIn = () => {
       }else if(error.code === 'auth/wrong-password'){
         setOpen({
           errorMes:{password: "Wrong password"}
+          })
+      }else if(error.code === "auth/invalid-email"){
+        setOpen({
+          errorMes:{email: "The email address is badly formatted."}
           })
       }
     } 

@@ -137,6 +137,9 @@ const Profile = () => {
                     .then(
                         setOpen({isSucces:true,
                             succesMes:"successfully updated!"})
+                        
+                    ).then(
+                        setValue({password:""})
                     )
                       
                   }).catch(function(error){
@@ -205,6 +208,9 @@ const Profile = () => {
                         .then(
                           setOpen({isSucces:true,
                               succesMes:"successfully updated!"})
+                            
+                        ).then(
+                            setValue({password:""})
                         )
                       }).catch(function(error) {
                         // An error happened.
@@ -250,6 +256,7 @@ const Profile = () => {
                 editUser.updatePassword(newPassword).then(function() {
                     setOpen({isSucces:true,
                         succesMes:"Password was successfully updated!"})
+                    setValue({password:""})
                   }).catch(function(error) {
                     setOpen({isError: true,
                         errorMes:{password: error.message}

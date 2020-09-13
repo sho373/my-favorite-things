@@ -35,11 +35,11 @@ class ResultsPage extends Component {
                         this.props.location.state.results.map((book,index) =>{
                             if(book.Item.largeImageUrl.includes("noimage_01.gif")) return null;
                             
-                            let image = book.Item.largeImageUrl.replace('?_ex=200x200','?_ex=500x500');
-                            let title = book.Item.title
-                            let author = book.Item.author ? book.Item.author : book.Item.hardware
-                            let itemUrl = book.Item.itemUrl;
-                            let publisherName = book.Item.publisherName;
+                            const image = book.Item.largeImageUrl.replace('?_ex=200x200','?_ex=500x500');
+                            const title = book.Item.title
+                            const author = book.Item.author ? book.Item.author : book.Item.hardware
+                            const itemUrl = book.Item.itemUrl;
+                            const publisherName = book.Item.publisherName;
             
                             return image && 
                                 <div className = "card" key={index}><ResultsCardBook
@@ -63,7 +63,7 @@ class ResultsPage extends Component {
                         {this.props.location.state.results.map((movie,index) => {
                             if(movie.poster_path === null) return null;
                             
-                            let image = `https://image.tmdb.org/t/p/original${movie.poster_path}`
+                            const image = `https://image.tmdb.org/t/p/original${movie.poster_path}`
                             let releaseDate;
                             let title;
                             let itemUrl;
@@ -93,10 +93,10 @@ class ResultsPage extends Component {
                     ? <div className="music-list">
                         {  
                             this.props.location.state.results.map((music,index) =>{
-                                let image = music.artworkUrl100.replace("100x100bb.jpg","500x500bb.jpg");
-                                let title = music.collectionCensoredName
-                                let author = music.artistName
-                                let itemUrl = music.trackViewUrl
+                                const image = music.artworkUrl100.replace("100x100bb.jpg","500x500bb.jpg");
+                                const title = music.collectionCensoredName
+                                const author = music.artistName
+                                const itemUrl = music.trackViewUrl
                                 return image && <div className = "card" key={index}><ResultsCardBook
                                             key={index}
                                             image = {image}
@@ -111,10 +111,10 @@ class ResultsPage extends Component {
                     :(this.props.location.state.genreId === 'game')
                     ? <div className="game-list">
                         {this.props.location.state.results.map((game,index) =>{
-                            let image = game.cover ? "https:" + game.cover.url.replace('t_thumb','t_cover_big') : "";
-                            let title = game.name;
-                            let releaseDate = game.first_release_date ? new Date(game.first_release_date * 1000).toLocaleDateString('ja-JP').slice(0,4) : "";
-                            let itemUrl = game.url
+                            const image = game.cover ? "https:" + game.cover.url.replace('t_thumb','t_cover_big') : "";
+                            const title = game.name;
+                            const releaseDate = game.first_release_date ? new Date(game.first_release_date * 1000).toLocaleDateString('ja-JP').slice(0,4) : "";
+                            const itemUrl = game.url
                             return image && <div className = "card" key={index}><ResultsCardBook
                                         key={index}
                                         image = {image ? image : "No"}

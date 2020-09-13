@@ -52,7 +52,7 @@ export const AddList = () => {
   const [showConfirm, setshowConfirm] = useState(false);
  
   const classes = useStyles();
-  let maxNumList = 10;
+  const maxNumList = 10;
   
   const checkAndAdd = () => {
     findLength().then(

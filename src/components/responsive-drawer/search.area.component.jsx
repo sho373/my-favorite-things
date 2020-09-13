@@ -153,7 +153,7 @@ export const SearchArea = () => {
             sortString = "&booksGenreId=001001"
         }
        
-        let requestUrl = REACT_APP_RAKUTEN_BOOKS_API_URL 
+        const requestUrl = REACT_APP_RAKUTEN_BOOKS_API_URL 
                         + "&format=json" 
                         + "&applicationId=" + REACT_APP_RAKUTEN_APP_ID
                         + "&sort" + encodeURI("reviewCount")
@@ -294,8 +294,8 @@ export const SearchArea = () => {
                
                   <InputBase
                     placeholder={genreName === 'game' ? 
-                    "Search by title in English…"
-                    :"Search by title…"}
+                    "Title in English…"
+                    :"Enter title…"}
                     classes={{
                       root: classes.inputRoot,
                       input: classes.inputInput,

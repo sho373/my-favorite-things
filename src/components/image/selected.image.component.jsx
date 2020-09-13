@@ -8,14 +8,14 @@ import { Redirect } from 'react-router-dom'
 import {Link} from "react-router-dom"
 
 const showDetails = (id,genre) => {
-  let detailsData =  firestore
+  firestore
   .collection("items")
   .where("genreName","==",genre)
   .doc(id)
   .get()
   .then(function(doc) {
     if (doc.exists) {
-        let detailsUrl = doc.data().itemUrl
+        const detailsUrl = doc.data().itemUrl
     
         if(detailsUrl){
           window.open(detailsUrl, '_blank')
