@@ -3,15 +3,15 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const config = {
-        apiKey: "AIzaSyBn5CTmfLBC5rDquXuu7rzH9Ftrs76JIOQ",
-        authDomain: "project-9fe3c.firebaseapp.com",
-        databaseURL: "https://project-9fe3c.firebaseio.com",
-        projectId: "project-9fe3c",
-        storageBucket: "project-9fe3c.appspot.com",
-        messagingSenderId: "813982268075",
-        appId: "1:813982268075:web:4218ece5887c28263595ee",
-        measurementId: "G-R447F10HGW"
-}
+  apiKey: 'AIzaSyBn5CTmfLBC5rDquXuu7rzH9Ftrs76JIOQ',
+  authDomain: 'project-9fe3c.firebaseapp.com',
+  databaseURL: 'https://project-9fe3c.firebaseio.com',
+  projectId: 'project-9fe3c',
+  storageBucket: 'project-9fe3c.appspot.com',
+  messagingSenderId: '813982268075',
+  appId: '1:813982268075:web:4218ece5887c28263595ee',
+  measurementId: 'G-R447F10HGW',
+};
 
 firebase.initializeApp(config);
 
@@ -32,7 +32,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         email,
         createdAt,
         userid,
-        ...additionalData
+        ...additionalData,
       });
     } catch (error) {
       console.log('error creating user', error.message);
@@ -42,15 +42,15 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-export const convertCollectionsSnapshotToMap = collections => {
-  const transformedCollection = collections.docs.map(doc => {
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformedCollection = collections.docs.map((doc) => {
     const { title, items } = doc.data();
 
     return {
       routeName: encodeURI(title.toLowerCase()),
       id: doc.id,
       title,
-      items
+      items,
     };
   });
 

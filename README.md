@@ -6,7 +6,6 @@ This application was built using create-react-app as a base, and the technologie
 
 ## Demo
 
-
 ![Application Demo](demo/demo.gif)
 
 Url Link : [https://project-9fe3c.web.app/signin](https://project-9fe3c.web.app/signin)

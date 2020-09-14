@@ -24,7 +24,6 @@
     "axios": "^0.20.0",
     "clsx": "^1.1.1",
     "dotenv": "^8.2.0",
-    "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.11.0",
@@ -32,7 +31,6 @@
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.0",
-    "react-spinners": "^0.9.0",
     "reselect": "^4.0.0",
     "stop-runaway-react-effects": "^2.0.0",
     "styled-components": "^5.1.1"
@@ -42,7 +40,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,scss,css}": [
