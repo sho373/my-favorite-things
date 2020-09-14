@@ -1,6 +1,7 @@
-import React, {useState,} from 'react';
+import React, {useState,useEffect} from 'react';
 import axios from 'axios';
-import { Redirect } from "react-router-dom"; 
+
+import { useHistory } from "react-router-dom";
 //MUI
 import Paper from '@material-ui/core/Paper';
 import { makeStyles,fade,withStyles} from '@material-ui/core/styles';
@@ -131,6 +132,9 @@ export const SearchArea = () => {
     const [genreName,setGenreName] = useState('book');
     const [open,setOpen] = useState(false);
    
+
+    const history = useHistory();
+
     const handleClose = () =>{
      setOpen(false);
     }
@@ -165,11 +169,14 @@ export const SearchArea = () => {
             .get(proxy + requestUrl)
             .then((data) => {
                 //console.log("USING BOOK API ")
-                setWorks([...data.data.Items])
                
                 if(data.data.Items.length === 0){
                     setOpen(true);
                     console.log("CANT FIND")
+                    
+                }else{
+                  setWorks([...data.data.Items])
+                  
                 }
             
             })
@@ -195,11 +202,13 @@ export const SearchArea = () => {
             .get(proxy + requestUrl)
             .then((data) => {
                 //console.log("USING MOVIE API ")
-                setWorks([...data.data.results])
+               
                 if(data.data.results.length === 0){
                   setOpen(true);
                   console.log("CANT FIND")
-              }
+                }else{
+                  setWorks([...data.data.results])
+                }
             
             })
             .catch(error =>{
@@ -216,10 +225,12 @@ export const SearchArea = () => {
             .get(proxy + url)
             .then((data) => {
                 //console.log("USING MUSIC API ")
-                setWorks([...data.data.results])
+                
                 if(data.data.results.length === 0){
                   setOpen(true);
                   console.log("CANT FIND")
+                }else{
+                  setWorks([...data.data.results])
                 }
              
             })
@@ -239,10 +250,12 @@ export const SearchArea = () => {
         axios.get(`${proxy}https://api-v3.igdb.com/games?search=${myValue}&region=5&fields=name,first_release_date,cover.url,url&limit=15`)
         .then((data) => {
             //console.log("GAME API ")
-            setWorks([...data.data])
+            
             if(data.data.length === 0){
               setOpen(true);
               console.log("CANT FIND")
+            }else{
+              setWorks([...data.data])
             }
             
         })
@@ -251,7 +264,18 @@ export const SearchArea = () => {
             console.log("CANT FIND")
         }) 
     }
- 
+
+    useEffect(() => {
+      if(works){
+        console.log("useeffect")
+        history.push({
+          pathname: '/search',
+          state: {results: works, genreId:genreName},
+        })
+      }
+     
+    }, [works])
+   
     return (
         <div className={classes.root}>
             <NativeSelect
@@ -305,7 +329,8 @@ export const SearchArea = () => {
                   />
                   <IconButton 
                       className={classes.searchButton} type="submit" 
-                      aria-label="search">
+                      aria-label="search"
+                     >
                       <SearchIcon fontSize="small"/>
                     </IconButton>
 
@@ -325,13 +350,13 @@ export const SearchArea = () => {
                     </DialogActions>
                 </Dialog>)
               } 
-              
-                  {(works.length > 0) && 
+                
+                  {/* {(works.length > 0 ) && 
                     <Redirect to={{
-                          pathname: "/search",
-                          state: { results: works,genreId:genreName},
+                          pathname: '/search',
+                          state: {results: works, genreId:genreName},
                       }}/>
-                  }
+                  } */}
         </div>
     )
 }

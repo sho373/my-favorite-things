@@ -94,11 +94,13 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
   contentShift: {
-    [theme.breakpoints.up('sm')]:{transition: theme.transitions.create('margin', {
+    [theme.breakpoints.up('sm')]:{
+      transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: drawerWidth,}
+      marginLeft: drawerWidth,
+    }
   },
   drawerHeader: {
     display: 'flex',
@@ -164,7 +166,7 @@ function ResponsiveDrawer(props) {
 
         <Divider className={classes.divider}/>
 
-      {currentUser && (<> 
+      { (<> 
         <List>
           { sortedLists && (sortedLists.map((list) => (
             <div key={list.listId}><IndividualList list={list} /></div>
@@ -184,7 +186,7 @@ function ResponsiveDrawer(props) {
       
       <AppBar elevation={0} position="fixed" 
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
+          [classes.appBarShift]: open && currentUser
         })}>
         <Toolbar>
 
@@ -253,7 +255,7 @@ function ResponsiveDrawer(props) {
             {drawer}
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
+        {currentUser && (<Hidden xsDown implementation="css">
         <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -266,7 +268,7 @@ function ResponsiveDrawer(props) {
         
          {drawer}
       </Drawer>
-        </Hidden>
+        </Hidden>)}
       </nav>
       <main
         className={clsx(classes.content, {

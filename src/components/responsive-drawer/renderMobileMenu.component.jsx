@@ -63,6 +63,13 @@ export const RenderMobileMenu = ({displayName}) => {
         setShowConfirm(false);
     }
 
+    const signedOut = () => {
+        auth.signOut().then(function() {
+            history.push('/signout')
+          }).catch(function(error) {
+            // An error happened.
+          });
+    }
     const mobileMenuId = 'primary-search-account-menu-mobile';
     
     return(
@@ -71,22 +78,21 @@ export const RenderMobileMenu = ({displayName}) => {
                 <Tooltip title="List">
                     <IconButton 
                         onClick = {() => history.push(`/users/${displayName}`)}>
-                        <ListAltIcon/>
+                    <ListAltIcon/>
                     </IconButton>
                 </Tooltip>
                 
                 <Tooltip title="Profile">
                     <IconButton
-                        onClick={()=> history.push('/profile')}
-                      >
-                            <AccountCircleIcon/>
+                        onClick={()=> history.push('/profile')}>
+                    <AccountCircleIcon/>
                     </IconButton>
                 </Tooltip>
                 
                 <Tooltip title="Sign out">
                     <IconButton 
-                        onClick={(event) => {setShowConfirm(true)}}>
-                        <ExitToAppIcon/>
+                        onClick={(event) => setShowConfirm(true)}>
+                    <ExitToAppIcon/>
                     </IconButton>
                 </Tooltip>
             </div>
@@ -112,22 +118,21 @@ export const RenderMobileMenu = ({displayName}) => {
                 <MenuItem
                     className={classes.mobileMenu}
                     onClick = {() => history.push(`/users/${displayName}`)}>
-                        <ListAltIcon className={classes.mobileMenuIcon}/>   
+                    <ListAltIcon className={classes.mobileMenuIcon}/>   
                     
                     <p>List</p>
                 </MenuItem>
                 <MenuItem
                     className={classes.mobileMenu}
                     onClick = {() => history.push('/profile')}>
-                            <AccountCircleIcon className={classes.mobileMenuIcon}/>
+                    <AccountCircleIcon className={classes.mobileMenuIcon}/>
                         
                     <p>Profile</p>
                 </MenuItem>
                 
                 <MenuItem 
                     className={classes.mobileMenu}
-                    onClick={(event) => {setShowConfirm(true);
-                        history.push('/signin')}}>
+                    onClick={(event) => setShowConfirm(true)}>
                     <ExitToAppIcon className={classes.mobileMenuIcon}/>
                    
                     <p>Sign out</p>
@@ -143,8 +148,7 @@ export const RenderMobileMenu = ({displayName}) => {
                         Cancel
                     </Button>
                     <Button variant="contained" color="primary"
-                        onClick={() => {auth.signOut();
-                        history.push('/signin')}}>
+                        onClick={() => signedOut()}>
                         Sign out
                     </Button>
                     </DialogActions>

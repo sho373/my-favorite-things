@@ -136,8 +136,6 @@ export const ResultsCardBook = (props) => {
     const handleChange = (event) => {
         //let title = getTitle(lists,event.target.value).name
         setPickedList();
-        console.log("pickedlist",pickedList)
-        console.log("pickedlistID",pickedListId)
         //console.log(getTitle(lists,event.target.value).name)
         setPickedListId(event.target.value)
     };

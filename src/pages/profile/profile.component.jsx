@@ -154,22 +154,7 @@ const Profile = () => {
                      errorMes:{displayname: error.message}
                 })
             }
-            // try{
-            //     await firestore.collection('users')
-            //     .doc(userId)
-            //     .update({
-            //         createdAt:new Date(),
-            //         displayName:displayName
-            //     })
-            //     .then(
-            //         setOpen({isSucces:true,
-            //             succesMes:"successfully updated!"})
-            //     )
-            // }catch(error){
-            //     setOpen({isError: true,
-            //         errorMes:{display: error.message}
-            //         })
-            // }   
+            
         }       
     }
 

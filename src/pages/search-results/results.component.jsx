@@ -2,7 +2,7 @@ import React, {Component}from 'react';
 import {ResultsCardBook} from './results.card.book.component';
 import {withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-
+import { PropTypes } from 'react'
 
 const styles = (theme) => ({
     paper:{
@@ -10,9 +10,6 @@ const styles = (theme) => ({
         marginRight:"auto",
         marginLeft:"auto",
         width:420,
-        [theme.breakpoints.down('sm')]:{
-            
-        },
     }
 })
 
@@ -130,7 +127,7 @@ class ResultsPage extends Component {
                 )
             }
         </Paper>
-        </div>
+</div>
     )
 }
 }

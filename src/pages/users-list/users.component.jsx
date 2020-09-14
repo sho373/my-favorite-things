@@ -4,6 +4,7 @@ import {firestore} from '../../firebase/firebase.utils';
 import {UsersItem} from './users.items.components';
 import {sortedList} from '../../helpers/helpers';
 
+import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,9 +24,20 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(3),
     },
     listName:{
-        marginTop:theme.spacing(7),
-        color:"#2c2c2c"
+        color:"#2c2c2c",
+        margin:theme.spacing(3.5,'auto',2.5,'auto'),
     },
+    title:{
+      color:"#2c2c2c",
+      margin:theme.spacing(5.5,'auto',2.5,'auto'),
+    },
+    divider:{
+      color:"#ff7a7a",
+      margin:theme.spacing(0,'auto',4,'auto'),
+    },
+    noUser:{
+      margin:theme.spacing(5,'auto'),
+    }
 }));
 
 export const Users = (props) => {
@@ -99,7 +111,12 @@ export const Users = (props) => {
     return (
         
         <div className={classes.root}>
-            {/* <div className={classes.toolbar}/> */}
+            
+            <h2 className={classes.title}>
+              A List of {currentUserName}'s Favorite Things
+            </h2>
+            <Divider />
+
             {sortedLists && (sortedLists.map((list) => {
                 return (<div key={list.listId}>
                     <h2 className = {classes.listName} >{list.name}</h2>
@@ -107,9 +124,8 @@ export const Users = (props) => {
             }))}
 
             {errorMes && (
-              <h1>
-                <div className={classes.toolbar}/>
-                NO USER FOUND 
+              <h1 className={classes.noUser}>
+               USER NOT FOUND 
               </h1>
             )}
         </div> 

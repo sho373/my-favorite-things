@@ -9,15 +9,15 @@ import Users from './pages/users-list/users.component';
 import Profile from './pages/profile/profile.component';
 import SignIn from './pages/sign-in/sign-in.component';
 import SignUp from './pages/sign-up/sign-up.component';
+import SignOut from './pages/sign-out/sign-out.component';
 import ResultsPage from './pages/search-results/results.component'
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import {ListsProvider, SelectedListProvider} from './contexts/lists/index';
 import CurrentUserContext from './contexts/current-user/current-user.context';
 
-
 export const  pageNotFound = () => {
-  return <h1 style={{margin:'50px'}} data-testid = "page-not-found">404 Page not found</h1>
+return <h1 style={{margin:'50px'}} data-testid = "page-not-found">404 Page not found</h1>
 }
 
 class App extends React.Component {
@@ -60,7 +60,7 @@ class App extends React.Component {
       <div>
          <SelectedListProvider>
               <ListsProvider>  
-            <main data-testid="application">
+            <main data-testid='application'>
               <CurrentUserContext.Provider value={this.state.currentUser}>
                 <ResponsiveDrawer/>
                 
@@ -105,7 +105,8 @@ class App extends React.Component {
                 <Route exact path='/users/:displayName' component={Users} />
                 <Route exact path='/search'
                   component={ResultsPage} />
-                  <Route component={pageNotFound}/>
+                <Route exact path='/signout' component={SignOut} />
+                <Route component={pageNotFound}/>
                 </Switch>
 
               </CurrentUserContext.Provider>
