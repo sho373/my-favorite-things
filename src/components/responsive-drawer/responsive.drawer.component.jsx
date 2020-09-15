@@ -136,6 +136,9 @@ function ResponsiveDrawer(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const handleMobileClose = () => {
+    setMobileOpen(false);
+  };
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -148,7 +151,6 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      {/* { (<div className={classes.toolbar} />)} */}
       <div className={classes.drawerHeader}>
         <Link className="logo-container" to="/">
           <Logo />
@@ -176,7 +178,7 @@ function ResponsiveDrawer(props) {
           <List>
             {sortedLists &&
               sortedLists.map((list) => (
-                <div key={list.listId}>
+                <div key={list.listId} onClick={handleMobileClose}>
                   <IndividualList list={list} />
                 </div>
               ))}

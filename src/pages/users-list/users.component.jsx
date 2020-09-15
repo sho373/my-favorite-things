@@ -108,7 +108,7 @@ export const Users = (props) => {
   return (
     <div className={classes.root}>
       <h2 className={classes.title}>
-        A List of {currentUserName}&lsquo;s Favorite Things
+        A List of {currentUserName}&rsquo;s Favorite Things
       </h2>
       <Divider />
 

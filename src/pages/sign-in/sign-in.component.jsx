@@ -125,7 +125,7 @@ const SignIn = () => {
           </Button>
         </div>
         <h4 className="sign-up-here">
-          don&lsquo;t have an account ? sign up <Link href="/signup">here</Link>
+          don&rsquo;t have an account ? sign up <Link href="/signup">here</Link>
         </h4>
       </form>
     </div>
