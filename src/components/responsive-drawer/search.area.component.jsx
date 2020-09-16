@@ -14,7 +14,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
+import { css } from '@emotion/core';
+import BarLoader from 'react-spinners/BarLoader';
 
+const override = css`
+  display: block;
+  top: 78px;
+  left: 0px;
+  width: 100%;
+  position: absolute;
+`;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -119,9 +128,11 @@ const BootstrapInput = withStyles((theme) => ({
 let REACT_APP_RAKUTEN_BOOKS_API_URL =
   process.env.REACT_APP_RAKUTEN_BOOKS_API_URL;
 const REACT_APP_RAKUTEN_APP_ID = process.env.REACT_APP_RAKUTEN_APP_ID;
-const REACT_APP_IGDB_API_KEY = process.env.REACT_APP_IGDB_API_KEY;
+//const REACT_APP_IGDB_API_KEY = process.env.REACT_APP_IGDB_API_KEY;
 const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-const proxy = 'https://cors-anywhere.herokuapp.com/';
+//const proxy = 'https://cors-anywhere.herokuapp.com/';
+
+axios.defaults.baseURL = 'https://project-9fe3c.web.app/';
 
 export const SearchArea = () => {
   const classes = useStyles();
@@ -130,6 +141,7 @@ export const SearchArea = () => {
   const [myValue, setMyValue] = useState('');
   const [genreName, setGenreName] = useState('book');
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const history = useHistory();
 
@@ -145,6 +157,10 @@ export const SearchArea = () => {
 
   const handleSearch = (event) => {
     setMyValue(event.target.value);
+  };
+
+  const loadClose = () => {
+    setLoading(false);
   };
 
   const searchRakuten = (event) => {
@@ -168,7 +184,7 @@ export const SearchArea = () => {
       encodeURIComponent(myValue);
 
     axios
-      .get(proxy + requestUrl)
+      .get(requestUrl)
       .then((data) => {
         //console.log("USING BOOK API ")
 
@@ -177,6 +193,7 @@ export const SearchArea = () => {
         } else {
           setWorks([...data.data.Items]);
         }
+        setLoading(false);
       })
       .catch((error) => {
         setOpen(true);
@@ -197,7 +214,7 @@ export const SearchArea = () => {
       `?api_key=${TMDB_API_KEY}&language=ja&query=${myValue}`;
 
     axios
-      .get(proxy + requestUrl)
+      .get(requestUrl)
       .then((data) => {
         //console.log("USING MOVIE API ")
 
@@ -206,6 +223,7 @@ export const SearchArea = () => {
         } else {
           setWorks([...data.data.results]);
         }
+        setLoading(false);
       })
       .catch((error) => {
         setOpen(true);
@@ -217,7 +235,7 @@ export const SearchArea = () => {
     let url = `https://itunes.apple.com/search?term=${myValue}&country=jp&limit=15&media=music&entity=musicTrack`;
 
     axios
-      .get(proxy + url)
+      .get(url)
       .then((data) => {
         //console.log("USING MUSIC API ")
 
@@ -226,33 +244,37 @@ export const SearchArea = () => {
         } else {
           setWorks([...data.data.results]);
         }
+        setLoading(false);
       })
       .catch((error) => {
         setOpen(true);
       });
   };
 
-  const searchGame = (event) => {
-    event.preventDefault();
+  // const searchGame = (event) => {
+  //   event.preventDefault();
 
-    axios.defaults.headers.common['user-key'] = REACT_APP_IGDB_API_KEY;
-    axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-    axios
-      .get(
-        `${proxy}https://api-v3.igdb.com/games?search=${myValue}&region=5&fields=name,first_release_date,cover.url,url&limit=15`
-      )
-      .then((data) => {
-        if (data.data.length === 0) {
-          setOpen(true);
-        } else {
-          setWorks([...data.data]);
-        }
-      })
-      .catch((error) => {
-        setOpen(true);
-      });
-  };
+  //   axios.defaults.headers.common['user-key'] = REACT_APP_IGDB_API_KEY;
+  //   axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+  //   axios
+  //     .get(
+  //       `https://api-v3.igdb.com/games?search=${myValue}&region=5&fields=name,first_release_date,cover.url,url&limit=15`,
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     )
+  //     .then((data) => {
+  //       if (data.data.length === 0) {
+  //         setOpen(true);
+  //       } else {
+  //         setWorks([...data.data]);
+  //       }
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       setOpen(true);
+  //     });
+  // };
 
   useEffect(() => {
     if (works) {
@@ -280,7 +302,7 @@ export const SearchArea = () => {
         <option value={'tvseries'}> TV Series</option>
         <option value={'anime'}> Anime</option>
         <option value={'music'}> Music</option>
-        <option value={'game'}> Game</option>
+        {/* <option value={'game'}> Game</option> */}
       </NativeSelect>
 
       <div className={classes.search}>
@@ -297,17 +319,14 @@ export const SearchArea = () => {
               ? searchMovie
               : genreName === 'music'
               ? searchMusic
-              : genreName === 'game'
-              ? searchGame
-              : searchGame
-            //goToSearch
+              : // : genreName === 'game'
+                // ? searchGame
+                searchMusic
           }
         >
           <Paper className={classes.paper}>
             <InputBase
-              placeholder={
-                genreName === 'game' ? 'Title in English…' : 'Enter title…'
-              }
+              placeholder="Enter title…"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -319,6 +338,7 @@ export const SearchArea = () => {
               className={classes.searchButton}
               type="submit"
               aria-label="search"
+              onClick={() => setLoading(true)}
             >
               <SearchIcon fontSize="small" />
             </IconButton>
@@ -337,19 +357,27 @@ export const SearchArea = () => {
             There were no matches for your search term.
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button
+              onClick={() => {
+                handleClose();
+                loadClose();
+              }}
+              color="primary"
+            >
               Cancel
             </Button>
           </DialogActions>
         </Dialog>
       )}
 
-      {/* {(works.length > 0 ) && 
-    <Redirect to={{
-          pathname: '/search',
-          state: {results: works, genreId:genreName},
-      }}/>
-  } */}
+      {!open && (
+        <BarLoader
+          css={override}
+          size={150}
+          color={'#36d7b7'}
+          loading={loading}
+        />
+      )}
     </div>
   );
 };

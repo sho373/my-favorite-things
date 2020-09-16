@@ -31,9 +31,9 @@
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.0",
+    "react-spinners": "^0.9.0",
     "reselect": "^4.0.0",
-    "stop-runaway-react-effects": "^2.0.0",
-    "styled-components": "^5.1.1"
+    "stop-runaway-react-effects": "^2.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -102,5 +102,6 @@
     "eslint-plugin-react-hooks": "^4.0.0",
     "jest": "^26.4.2",
     "prettier": "^2.1.1"
-  }
+  },
+  "proxy": "http://localhost:3000"
 }

@@ -10,19 +10,11 @@ import Profile from './pages/profile/profile.component';
 import SignIn from './pages/sign-in/sign-in.component';
 import SignUp from './pages/sign-up/sign-up.component';
 import SignOut from './pages/sign-out/sign-out.component';
+import PageNotFound from './pages/page-not-found/page.not.found';
 import ResultsPage from './pages/search-results/results.component';
-
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { ListsProvider, SelectedListProvider } from './contexts/lists/index';
 import CurrentUserContext from './contexts/current-user/current-user.context';
-
-export const pageNotFound = () => {
-  return (
-    <h1 style={{ margin: '50px' }} data-testid="page-not-found">
-      404 Page not found
-    </h1>
-  );
-};
 
 class App extends React.Component {
   constructor() {
@@ -65,7 +57,6 @@ class App extends React.Component {
             <main data-testid="application">
               <CurrentUserContext.Provider value={this.state.currentUser}>
                 <ResponsiveDrawer />
-
                 <Switch>
                   <Route
                     exact
@@ -100,9 +91,11 @@ class App extends React.Component {
                     }
                   />
                   <Route exact path="/users/:displayName" component={Users} />
+
                   <Route exact path="/search" component={ResultsPage} />
+
                   <Route exact path="/signout" component={SignOut} />
-                  <Route component={pageNotFound} />
+                  <Route component={PageNotFound} />
                 </Switch>
               </CurrentUserContext.Provider>
             </main>

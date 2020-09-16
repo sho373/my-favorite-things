@@ -2,7 +2,7 @@
 
 ### "Making your own Top 10 lists"
 
-This application was built using create-react-app as a base, and the technologies used were React (Custom Hooks, Context), Firebase & Material UI.
+This application was built using create-react-app as a base, and the technologies used were React (Custom Hooks, Context), Firebase (Autentication, Cloud Firestore, Hosting) & Material UI.
 
 ## Demo
 
@@ -19,6 +19,3 @@ Moive Search API (Movie, Anime and TV Series): [The Movie Database (TMDb)](https
 Books Search API (Manga and Book): [Rakuten Books Book Search API](https://webservice.rakuten.co.jp/api/booksbooksearch/)
 
 Music Search API : [iTunes Search API](https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/)
-
-Game Search API : [
-IGDB: Video Game Database API](https://www.igdb.com/api)

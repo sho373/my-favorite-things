@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     cursor: 'pointer',
     float: 'right',
+    margin: theme.spacing(0, 1),
   },
 }));
 
@@ -148,7 +149,13 @@ const Profile = () => {
               .then(
                 setOpen({ isSucces: true, succesMes: 'successfully updated!' })
               )
-              .then(setValue({ password: '' }));
+              .then(setValue({ password: '' }))
+              .catch(function (error) {
+                setOpen({
+                  isError: true,
+                  errorMes: { displayname: error.message },
+                });
+              });
           })
           .catch(function (error) {
             setOpen({
@@ -371,6 +378,7 @@ const Profile = () => {
                     Cancel
                   </Button>
                   <Button
+                    disabled={currentUser.displayName === 'testUser'}
                     variant="contained"
                     color="primary"
                     onClick={() => updateDisplay()}
@@ -442,6 +450,7 @@ const Profile = () => {
                     Cancel
                   </Button>
                   <Button
+                    disabled={currentUser.displayName === 'testUser'}
                     variant="contained"
                     color="primary"
                     onClick={() => updateEmail()}
@@ -528,6 +537,7 @@ const Profile = () => {
               Cancel
             </Button>
             <Button
+              disabled={currentUser.displayName === 'testUser'}
               variant="contained"
               color="primary"
               onClick={() => setNewPassword()}
@@ -595,6 +605,7 @@ const Profile = () => {
               Cancel
             </Button>
             <Button
+              disabled={currentUser.displayName === 'testUser'}
               variant="contained"
               color="secondary"
               onClick={() => deleteAcocunt()}

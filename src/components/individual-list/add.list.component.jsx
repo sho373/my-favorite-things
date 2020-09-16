@@ -144,7 +144,7 @@ export const AddList = () => {
                     <MenuItem value={'tvseries'}>TV Series</MenuItem>
                     <MenuItem value={'anime'}>Anime</MenuItem>
                     <MenuItem value={'music'}>Music</MenuItem>
-                    <MenuItem value={'game'}>Game</MenuItem>
+                    {/* <MenuItem value={'game'}>Game</MenuItem> */}
                   </Select>
                 </FormControl>
 
