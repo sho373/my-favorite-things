@@ -148,6 +148,7 @@ export const IndividualList = ({ list }) => {
                     Cancel
                   </Button>
                   <Button
+                    disabled={list.listId === 'cEbf2usnqmdIFSSJxpFe'}
                     variant="contained"
                     color="secondary"
                     onClick={() => deleteList(list.docId, list.listId)}
@@ -188,6 +189,7 @@ export const IndividualList = ({ list }) => {
               Cancel
             </Button>
             <Button
+              disabled={list.listId === 'cEbf2usnqmdIFSSJxpFe'}
               variant="contained"
               color="primary"
               onClick={() => updateList(list.docId)}

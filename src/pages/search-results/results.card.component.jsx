@@ -29,10 +29,7 @@ import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
@@ -99,7 +96,16 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 220,
   },
+  snackBar: {
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: theme.spacing(6),
+    },
+  },
 }));
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export const ResultsCard = (props) => {
   const classes = useStyles();
@@ -107,11 +113,12 @@ export const ResultsCard = (props) => {
   const [open, setOpen] = useState({
     pullDown: false,
     doneMes: false,
-    errorMes: false,
-    hasErrorPull: false,
+    errorOver: false,
+    errorMes: '',
+    isNoListError: false,
   });
 
-  const { pullDown, doneMes, errorMes, hasErrorPull } = open;
+  const { pullDown, doneMes, errorOver, isNoListError, errorMes } = open;
 
   const [pickedList, setPickedList] = useState('');
   const [pickedListId, setPickedListId] = useState('');
@@ -132,6 +139,8 @@ export const ResultsCard = (props) => {
   const handleClose = () => {
     setOpen({ pullDown: false });
     setPickedList('');
+    setPickedListId('');
+    handleErrorClose();
   };
 
   const handleDoneClose = () => {
@@ -139,8 +148,11 @@ export const ResultsCard = (props) => {
   };
 
   const handleErrorClose = () => {
-    setOpen({ errorMes: false });
-    setOpen({ hasErrorPull: false });
+    setOpen({
+      errorOver: false,
+      isNoListError: false,
+      errorMes: '',
+    });
   };
 
   const findLength = () => {
@@ -171,7 +183,27 @@ export const ResultsCard = (props) => {
         setOpen({ doneMes: true });
       });
   };
-
+  const checkAndAdd = () => {
+    if (!pickedListId) {
+      setOpen({
+        pullDown: true,
+        isNoListError: true,
+      });
+    } else {
+      findLength().then((result) => {
+        if (result <= 9) {
+          addWork(props);
+          if (pullDown) handleClose();
+        } else {
+          setOpen({
+            errorOver: true,
+            errorMes: 'Over muximum number of items.',
+          });
+          setPickedListId('');
+        }
+      });
+    }
+  };
   return (
     <div>
       <Card elevation={0} className={classes.root}>
@@ -216,12 +248,14 @@ export const ResultsCard = (props) => {
             disableEscapeKeyDown
             open={pullDown}
             onClose={handleClose}
-            error={hasErrorPull}
           >
             <DialogTitle>Pick list to add</DialogTitle>
             <DialogContent>
               <form className={classes.container}>
-                <FormControl className={classes.formControl}>
+                <FormControl
+                  className={classes.formControl}
+                  error={isNoListError}
+                >
                   <InputLabel htmlFor="demo-dialog-native">List</InputLabel>
                   <Select
                     native
@@ -238,6 +272,9 @@ export const ResultsCard = (props) => {
                       );
                     })}
                   </Select>
+                  {isNoListError && (
+                    <FormHelperText>Please select list</FormHelperText>
+                  )}
                 </FormControl>
               </form>
             </DialogContent>
@@ -248,17 +285,7 @@ export const ResultsCard = (props) => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => {
-                  pickedList !== ''
-                    ? findLength().then((result) => {
-                        if (result <= 9) {
-                          addWork(props);
-                        } else {
-                          setOpen({ errorMes: true });
-                        }
-                      })
-                    : setOpen({ hasErrorPull: true });
-                }}
+                onClick={() => checkAndAdd()}
               >
                 Ok
               </Button>
@@ -270,6 +297,7 @@ export const ResultsCard = (props) => {
       <Divider className={classes.divider} />
 
       <Snackbar
+        className={classes.snackBar}
         open={doneMes}
         autoHideDuration={6000}
         onClose={handleDoneClose}
@@ -279,21 +307,13 @@ export const ResultsCard = (props) => {
         </Alert>
       </Snackbar>
       <Snackbar
-        open={errorMes}
+        className={classes.snackBar}
+        open={errorOver}
         autoHideDuration={6000}
         onClose={handleErrorClose}
       >
         <Alert onClose={handleErrorClose} severity="error">
-          Over muximum number of items.
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={hasErrorPull}
-        autoHideDuration={6000}
-        onClose={handleErrorClose}
-      >
-        <Alert onClose={handleErrorClose} severity="error">
-          List is not selected.
+          {errorMes}
         </Alert>
       </Snackbar>
     </div>

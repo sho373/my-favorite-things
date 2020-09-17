@@ -5,7 +5,7 @@ import Gallery from 'react-photo-gallery';
 import SelectedImage from '../../components/main/selectedImage.component';
 
 export const UsersItem = (props) => {
-  const { items } = useItems(props.list, props.genreName);
+  const { items } = useItems(props.list);
 
   const imageRenderer = useCallback(
     ({ index, left, top, key, photo }) => (

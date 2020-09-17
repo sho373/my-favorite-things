@@ -5,7 +5,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-export const useItems = (selectedList, selectedGenreName) => {
+export const useItems = (selectedList) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export const useItems = (selectedList, selectedGenreName) => {
         .then((snapshot) => {
           const allLists = snapshot.docs.map((item) => ({
             width: 4,
-            height: selectedGenreName === 'music' ? 4 : 6,
+            height: 6,
             itemurl: item.data().itemUrl,
             src: item.data().src,
           }));

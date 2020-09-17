@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Main = () => {
   let listName = '';
-  let listGenreName = '';
+  //let listGenreName = '';
   const { selectedList } = useSelectedListValue(); //listId
   const { lists } = useListsValue();
 
@@ -51,9 +51,9 @@ export const Main = () => {
     listName = getTitle(lists, selectedList)
       ? getTitle(lists, selectedList).name
       : '';
-    listGenreName = getTitle(lists, selectedList)
-      ? getTitle(lists, selectedList).genreName
-      : '';
+    // listGenreName = getTitle(lists, selectedList)
+    //   ? getTitle(lists, selectedList).genreName
+    //   : '';
   } else {
     listName = '';
   }
@@ -70,7 +70,7 @@ export const Main = () => {
       .orderBy('title')
       .onSnapshot((querySnapshot) => {
         let worksArray = [];
-        let imgHeight = listGenreName === 'music' ? 4 : 6;
+        //let imgHeight = listGenreName === 'music' ? 4 : 6;
         querySnapshot.forEach((doc) => {
           const { src, title, author, userid } = doc.data();
           worksArray.push({
@@ -79,8 +79,9 @@ export const Main = () => {
             title,
             author,
             width: 4,
-            height: imgHeight,
+            height: 6,
             userid,
+            key: doc.id,
           });
         });
         setWorksImg(worksArray);

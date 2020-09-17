@@ -20,6 +20,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -37,6 +38,11 @@ const useStyles = makeStyles((theme) => ({
   button: {
     float: 'right',
   },
+  snackBar: {
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: theme.spacing(6),
+    },
+  },
 }));
 
 export const AddList = () => {
@@ -49,23 +55,48 @@ export const AddList = () => {
   const { lists, setLists } = useListsValue();
 
   const [showConfirm, setshowConfirm] = useState(false);
+  const [error, setError] = useState({
+    isError: false,
+    errorMes: '',
+  });
 
+  const { isGenreError, isNameError, errorMes } = error;
   const classes = useStyles();
   const maxNumList = 10;
 
-  const checkAndAdd = () => {
-    findLength().then((result) => {
-      if (result <= maxNumList) {
-        addPoject();
-        if (setShowAdd) handleCloseAdd();
-      } else {
-        setshowConfirm(!showConfirm);
-      }
+  const handleErrorClose = () => {
+    setError({
+      isGenreError: false,
+      isNameError: false,
+      errorMes: '',
     });
+  };
+
+  const checkAndAdd = () => {
+    if (!genreName) {
+      setError({
+        isGenreError: true,
+      });
+    } else if (!listName) {
+      setError({
+        isNameError: true,
+        errorMes: 'Please fill out list name',
+      });
+    } else {
+      findLength().then((result) => {
+        if (result <= maxNumList) {
+          addPoject();
+          if (setShowAdd) handleCloseAdd();
+        } else {
+          setshowConfirm(!showConfirm);
+        }
+      });
+    }
   };
 
   const handleCloseAdd = () => {
     setShowAdd(false);
+    handleErrorClose();
   };
   const genreChange = (event) => {
     setGenreName(event.target.value);
@@ -129,7 +160,10 @@ export const AddList = () => {
           >
             <DialogContent>
               <form className={classes.container}>
-                <FormControl className={classes.formControl}>
+                <FormControl
+                  className={classes.formControl}
+                  error={isGenreError}
+                >
                   <InputLabel id="demo-dialog-select-label">Genre</InputLabel>
                   <Select
                     labelId="demo-dialog-select-label"
@@ -143,20 +177,25 @@ export const AddList = () => {
                     <MenuItem value={'movie'}>Movie</MenuItem>
                     <MenuItem value={'tvseries'}>TV Series</MenuItem>
                     <MenuItem value={'anime'}>Anime</MenuItem>
-                    <MenuItem value={'music'}>Music</MenuItem>
+                    {/* <MenuItem value={'music'}>Music</MenuItem> */}
                     {/* <MenuItem value={'game'}>Game</MenuItem> */}
                   </Select>
+                  {isGenreError && (
+                    <FormHelperText>Please select genre</FormHelperText>
+                  )}
                 </FormControl>
 
                 <FormControl className={classes.formControl}>
                   <TextField
+                    error={!!isNameError}
+                    helperText={errorMes}
                     data-testid="list-name"
                     margin="normal"
                     autoComplete="off"
                     className={classes.textControl}
                     onChange={(e) => setListName(e.target.value)}
                     id="outlined-basic"
-                    label="Name your list"
+                    label="List name"
                     variant="outlined"
                     required
                   />

@@ -150,7 +150,7 @@ export const SearchArea = () => {
   };
 
   const handleChange = (event) => {
-    document.getElementById('myForm').reset();
+    //document.getElementById('myForm').reset();
     setWorks('');
     setGenreName(event.target.value);
   };
@@ -180,76 +180,92 @@ export const SearchArea = () => {
       encodeURI('reviewCount') +
       '&outOfStockFlag=1' +
       sortString +
-      '&title=' +
+      '&keyword=' +
       encodeURIComponent(myValue);
 
-    axios
-      .get(requestUrl)
-      .then((data) => {
-        //console.log("USING BOOK API ")
-
-        if (data.data.Items.length === 0) {
+    if (myValue) {
+      axios
+        .get(requestUrl)
+        .then((data) => {
+          if (data.data.Items.length === 0) {
+            setOpen(true);
+          } else {
+            setWorks([...data.data.Items]);
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
           setOpen(true);
-        } else {
-          setWorks([...data.data.Items]);
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        setOpen(true);
 
-        return;
-      });
+          return;
+        });
+    } else {
+      setLoading(false);
+    }
   };
 
   const searchMovie = (event) => {
-    let sortString = 'movie';
     event.preventDefault();
+
+    let sortString = 'movie';
+    let requestUrl = '';
     if (genreName === 'tvseries' || genreName === 'anime') {
       sortString = 'tv';
     }
-    let requestUrl =
+    const containsJapanese = myValue.match(
+      /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/
+    );
+    requestUrl =
       `https://api.themoviedb.org/3/search/` +
       sortString +
-      `?api_key=${TMDB_API_KEY}&language=ja&query=${myValue}`;
+      `?api_key=${TMDB_API_KEY}&query=${myValue}`;
+    if (containsJapanese) {
+      requestUrl = requestUrl.concat('&language=ja');
+    }
 
-    axios
-      .get(requestUrl)
-      .then((data) => {
-        //console.log("USING MOVIE API ")
+    if (myValue) {
+      axios
+        .get(requestUrl)
+        .then((data) => {
+          //console.log("USING MOVIE API ")
 
-        if (data.data.results.length === 0) {
+          if (data.data.results.length === 0) {
+            setOpen(true);
+          } else {
+            setWorks([...data.data.results]);
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
           setOpen(true);
-        } else {
-          setWorks([...data.data.results]);
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        setOpen(true);
-      });
+        });
+    } else {
+      setLoading(false);
+    }
   };
 
-  const searchMusic = (event) => {
-    event.preventDefault();
-    let url = `https://itunes.apple.com/search?term=${myValue}&country=jp&limit=15&media=music&entity=musicTrack`;
+  // const searchMusic = (event) => {
+  //   event.preventDefault();
+  //   let url = `https://itunes.apple.com/search?term=${myValue}&country=jp&limit=15&media=music&entity=musicTrack`;
 
-    axios
-      .get(url)
-      .then((data) => {
-        //console.log("USING MUSIC API ")
+  //   myValue
+  //     ? axios
+  //         .get(url)
+  //         .then((data) => {
+  //           //console.log("USING MUSIC API ")
 
-        if (data.data.results.length === 0) {
-          setOpen(true);
-        } else {
-          setWorks([...data.data.results]);
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        setOpen(true);
-      });
-  };
+  //           if (data.data.results.length === 0) {
+  //             setOpen(true);
+  //           } else {
+  //             setWorks([...data.data.results]);
+  //           }
+  //           setLoading(false);
+  //         })
+  //         .catch((error) => {
+  //           setOpen(true);
+  //         })
+  //     : setLoading(false);
+  // };
 
   // const searchGame = (event) => {
   //   event.preventDefault();
@@ -301,7 +317,7 @@ export const SearchArea = () => {
         <option value={'movie'}> Movie</option>
         <option value={'tvseries'}> TV Series</option>
         <option value={'anime'}> Anime</option>
-        <option value={'music'}> Music</option>
+        {/* <option value={'music'}> Music</option> */}
         {/* <option value={'game'}> Game</option> */}
       </NativeSelect>
 
@@ -317,11 +333,12 @@ export const SearchArea = () => {
                 genreName === 'anime' ||
                 genreName === 'tvseries'
               ? searchMovie
-              : genreName === 'music'
-              ? searchMusic
-              : // : genreName === 'game'
-                // ? searchGame
-                searchMusic
+              : searchMovie
+            //: genreName === 'music'
+            //? searchMusic
+            // : genreName === 'game'
+            // ? searchGame
+            //searchMusic
           }
         >
           <Paper className={classes.paper}>

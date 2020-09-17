@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ResultsCard } from './results.card.component';
+import { animateScroll as scroll } from 'react-scroll';
+
+//MUI
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
@@ -14,7 +17,16 @@ const styles = (theme) => ({
 });
 
 class ResultsPage extends Component {
+  constructor(props) {
+    super(props);
+    this.scrollToTop = this.scrollToTop.bind(this);
+  }
+  scrollToTop() {
+    scroll.scrollToTop();
+  }
+
   render() {
+    this.scrollToTop();
     const { classes } = this.props;
 
     return (
@@ -25,7 +37,11 @@ class ResultsPage extends Component {
             this.props.location.state.genreId === 'manga' ? (
               <div className="book-list">
                 {this.props.location.state.results.map((book, index) => {
-                  if (book.Item.largeImageUrl.includes('noimage_01.gif'))
+                  let str = book.Item.booksGenreId.slice(0, 3);
+                  if (
+                    book.Item.largeImageUrl.includes('noimage_01.gif') ||
+                    (str !== '001' && str !== '005')
+                  )
                     return null;
 
                   const image = book.Item.largeImageUrl.replace(
@@ -162,4 +178,5 @@ ResultsPage.propTypes = {
   classes: PropTypes.object,
   location: PropTypes.object,
 };
+
 export default withStyles(styles)(ResultsPage);
