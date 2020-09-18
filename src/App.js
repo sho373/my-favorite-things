@@ -12,6 +12,7 @@ import SignUp from './pages/sign-up/sign-up.component';
 import SignOut from './pages/sign-out/sign-out.component';
 import PageNotFound from './pages/page-not-found/page.not.found';
 import ResultsPage from './pages/search-results/results.component';
+import About from './pages/about/about.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { ListsProvider, SelectedListProvider } from './contexts/lists/index';
 import CurrentUserContext from './contexts/current-user/current-user.context';
@@ -93,7 +94,7 @@ class App extends React.Component {
                   <Route exact path="/users/:displayName" component={Users} />
 
                   <Route exact path="/search" component={ResultsPage} />
-
+                  <Route exact path="/about" component={About} />
                   <Route exact path="/signout" component={SignOut} />
                   <Route component={PageNotFound} />
                 </Switch>

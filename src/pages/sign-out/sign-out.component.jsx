@@ -4,12 +4,6 @@ import Link from '@material-ui/core/Link';
 import './sign-out.styles.scss';
 
 class SignOut extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {};
-  }
-
   render() {
     return (
       <div className="sign-out">

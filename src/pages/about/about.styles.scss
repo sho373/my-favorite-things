@@ -1,0 +1,18 @@
+.about {
+  padding-top: 30px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+  .logo-container {
+    width: 175px;
+    height: 100px;
+    margin: 20px auto;
+  }
+  .title {
+    margin: 30px 0 20px 0;
+  }
+  .img-container {
+    margin: 20px auto;
+  }
+}

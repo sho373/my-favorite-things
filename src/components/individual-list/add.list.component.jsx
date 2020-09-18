@@ -229,7 +229,7 @@ export const AddList = () => {
                   <DialogTitle id="form-dialog-title"></DialogTitle>
                   <DialogContent>Over maximam number of list.</DialogContent>
                   <Button
-                    variant="ooutlined"
+                    variant="outlined"
                     onClick={handleClose}
                     color="default"
                   >

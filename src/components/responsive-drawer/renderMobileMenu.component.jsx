@@ -16,7 +16,7 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
-
+import InfoIcon from '@material-ui/icons/Info';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -88,7 +88,11 @@ export const RenderMobileMenu = ({ displayName }) => {
             <AccountCircleIcon />
           </IconButton>
         </Tooltip>
-
+        <Tooltip title="About">
+          <IconButton onClick={() => history.push('/about')}>
+            <InfoIcon />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Sign out">
           <IconButton onClick={(event) => setShowConfirm(true)}>
             <ExitToAppIcon />
@@ -131,7 +135,14 @@ export const RenderMobileMenu = ({ displayName }) => {
 
           <p>Profile</p>
         </MenuItem>
+        <MenuItem
+          className={classes.mobileMenu}
+          onClick={() => history.push('/about')}
+        >
+          <InfoIcon className={classes.mobileMenuIcon} />
 
+          <p>About</p>
+        </MenuItem>
         <MenuItem
           className={classes.mobileMenu}
           onClick={(event) => setShowConfirm(true)}
